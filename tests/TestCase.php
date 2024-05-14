@@ -42,6 +42,21 @@ class TestCase extends BaseTestCase
         }
     }
 
+    public function setExpectedException($exception, $exceptionMessage = '', $exceptionCode = null)
+    {
+        if (method_exists($this, 'expectException')) {
+            // PHPUnit 5+
+            $this->expectException($exception);
+            $this->expectExceptionMessage($exceptionMessage);
+            if ($exceptionCode !== null) {
+                $this->expectExceptionCode($exceptionCode);
+            }
+        } else {
+            // legacy PHPUnit
+            parent::setExpectedException($exception, $exceptionMessage, $exceptionCode);
+        }
+    }
+
     protected function expectPromiseRejected($promise)
     {
         return $promise->then($this->expectCallableNever(), $this->expectCallableOnce());

@@ -70,6 +70,12 @@ class FunctionResolveTest extends TestCase
         $this->expectPromiseRejected($promise);
     }
 
+    public function testResolveWithInvalidLoopThrows()
+    {
+        $this->setExpectedException('InvalidArgumentException', 'Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
+        Timer\resolve(1.0, 42);
+    }
+
     public function testWaitingForPromiseToResolveDoesNotLeaveGarbageCycles()
     {
         if (class_exists('React\Promise\When')) {
