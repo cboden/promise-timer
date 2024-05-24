@@ -48,6 +48,12 @@ class FunctionRejectTest extends TestCase
         $this->expectPromiseRejected($promise);
     }
 
+    public function testRejectWithInvalidLoopThrows()
+    {
+        $this->setExpectedException('InvalidArgumentException', 'Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
+        Timer\reject(1.0, 42);
+    }
+
     public function testWaitingForPromiseToRejectDoesNotLeaveGarbageCycles()
     {
         if (class_exists('React\Promise\When')) {

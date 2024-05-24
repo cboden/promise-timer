@@ -184,6 +184,12 @@ class FunctionTimeoutTest extends TestCase
         $this->expectPromiseResolved($timeout);
     }
 
+    public function testTimeoutWithInvalidLoopThrows()
+    {
+        $this->setExpectedException('InvalidArgumentException', 'Argument #3 ($loop) expected null|React\EventLoop\LoopInterface');
+        Timer\timeout(Promise\resolve(null), 1.0, 42);
+    }
+
     public function testWaitingForPromiseToResolveBeforeTimeoutDoesNotLeaveGarbageCycles()
     {
         if (class_exists('React\Promise\When')) {

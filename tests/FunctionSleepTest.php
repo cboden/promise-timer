@@ -70,6 +70,12 @@ class FunctionSleepTest extends TestCase
         $this->expectPromiseRejected($promise);
     }
 
+    public function testSleepWithInvalidLoopThrows()
+    {
+        $this->setExpectedException('InvalidArgumentException', 'Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
+        Timer\sleep(1.0, 42);
+    }
+
     public function testWaitingForPromiseToResolveDoesNotLeaveGarbageCycles()
     {
         if (class_exists('React\Promise\When')) {
